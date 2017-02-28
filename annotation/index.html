@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Fail</title>
+		<link rel="stylesheet" href="style.css" type="text/css" />
+	</head>
+
+	<body>
+
+		<h1 id="title">Fail</h1>
+
+		<video src="https://www.cs.tufts.edu/comp/20/fail.mp4" id="failvideo" controls></video>
+		<div id="lyrics"></div>
+
+		<script>
+			var lyricVideo = document.getElementById("failvideo");
+			var lyricsLine = document.getElementById("lyrics");
+
+			lyricVideo.addEventListener("timeupdate", function() {
+				console.log("Video Start");
+				
+				if (lyricVideo.currentTime < 8.5) {
+					lyricsLine.innerHTML = "Don't forget to sing!";
+				}
+				
+				else if (lyricVideo.currentTime > 8.5 && lyricVideo.currentTime < 12.5) {
+					lyricsLine.innerHTML = "You've got me feelin' emotions"
+				}
+				else if (lyricVideo.currentTime > 12.5 && lyricVideo.currentTime < 17) {
+					lyricsLine.innerHTML = "Deeper than I've ever dreamed of"
+				}
+				else if (lyricVideo.currentTime > 17 && lyricVideo.currentTime < 21) {
+					lyricsLine.innerHTML = "You've got me feelin' emotions"
+				}
+				else if (lyricVideo.currentTime > 21 && lyricVideo.currentTime < 25) {
+					lyricsLine.innerHTML = "Higher than the heavens above"
+				}
+
+				else if (lyricVideo.currentTime > 25 && lyricVideo.currentTime < 29.25) {
+					lyricsLine.innerHTML = "I feel good, I feel nice"
+				}
+				else if (lyricVideo.currentTime > 29.25 && lyricVideo.currentTime < 33.5) {
+					lyricsLine.innerHTML = "I've never felt so satisfied"
+				}
+				else if (lyricVideo.currentTime > 33.5 && lyricVideo.currentTime < 37) {
+					lyricsLine.innerHTML = "I'm in love, I'm alive"
+				}
+				else if (lyricVideo.currentTime > 37.75 && lyricVideo.currentTime < 42.25) {
+					lyricsLine.innerHTML = "Intoxicated, flyin' high"
+				}
+
+				else if (lyricVideo.currentTime > 42.25 && lyricVideo.currentTime < 45.5) {
+					lyricsLine.innerHTML = "Feels like a dream"
+				}
+				else if (lyricVideo.currentTime > 45.5 && lyricVideo.currentTime < 50.5) {
+					lyricsLine.innerHTML = "When you touch me tenderly"
+				}
+				else if (lyricVideo.currentTime > 50.5 && lyricVideo.currentTime < 54.5) {
+					lyricsLine.innerHTML = "I don't know if it's real"
+				}
+				else if (lyricVideo.currentTime > 54.5 && lyricVideo.currentTime < 58.75) {
+					lyricsLine.innerHTML = "But I like the way I feel inside"
+				}
+
+				else if (lyricVideo.currentTime > 58.75 && lyricVideo.currentTime < 62.5) {
+					lyricsLine.innerHTML = "You've got me feelin' emotions"
+				}
+				else if (lyricVideo.currentTime > 62.5 && lyricVideo.currentTime < 66.75) {
+					lyricsLine.innerHTML = "Deeper than I've ever dreamed of"
+				}
+				else if (lyricVideo.currentTime > 66.75 && lyricVideo.currentTime < 71) {
+					lyricsLine.innerHTML = "You've got me feelin' emotions"
+				}
+				else if (lyricVideo.currentTime > 71 && lyricVideo.currentTime < 76) {
+					lyricsLine.innerHTML = "Higher than the heavens above"
+				}
+				else {
+					lyricsLine.innerHTML = "";
+				}
+			}, false);
+		</script>
+</body>
+</html>
