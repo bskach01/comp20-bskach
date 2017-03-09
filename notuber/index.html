@@ -33,9 +33,26 @@
 		function startMap() {
 			myLocation = new google.maps.LatLng(myLat, myLng);
 			map.panTo(myLocation);
+			loadNotUber();
 		}
 
+		function loadNotUber() {
+			request.open("POST", "https://defense-in-derpth.herokuapp.com/submit", true);
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		
+			request.onreadystatechange = function() {
+				if (request.readyState == 4 && request.status == 200) {
+					console.log(request.responseText);
+					parseResponse();
+				}
+			};
+			request.send("username=YdpGqvtk&lat=" + myLat + "&lng=" + myLng);
+		}
 
+		function parseResponse() {
+			data = JSON. parse(request.responseText);
+			console.log(data.vehicles[1].username);
+		}
 
 
 	</script>
