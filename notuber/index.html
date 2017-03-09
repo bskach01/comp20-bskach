@@ -10,6 +10,9 @@
 		var myLocation = new google.maps.LatLng(myLat, myLng);
 		var map;
 		var request = new XMLHttpRequest();
+		var myMarker = document.getElementById("mymarker");
+
+		var infoWindow = new google.maps.InfoWindow();
 
 		function initialize() {
 			getMyLocation();
@@ -32,6 +35,12 @@
 
 		function startMap() {
 			myLocation = new google.maps.LatLng(myLat, myLng);
+			var marker = new google.maps.Marker({
+				position: myLocation,
+				title: "YdpGqvtk",
+				icon: myMarker
+			});
+			marker.setMap(map);
 			map.panTo(myLocation);
 			loadNotUber();
 		}
@@ -42,7 +51,6 @@
 		
 			request.onreadystatechange = function() {
 				if (request.readyState == 4 && request.status == 200) {
-					console.log(request.responseText);
 					parseResponse();
 				}
 			};
@@ -51,13 +59,21 @@
 
 		function parseResponse() {
 			data = JSON. parse(request.responseText);
-			console.log(data.vehicles[1].username);
+			console.log(data.vehicles[1]);
+			if (data.vehicles != null) {
+				console.log("you are a passenger");
+			}
+			if (data.passenger != null) {
+				console.log("you are not a driver");
+			}
 		}
 
 
 	</script>
 </head>
+
 <body onload="initialize()">
 	<div id="map"></div>
+	<img id="mymarker" src="mymarker.png" />
 </body>
 </html>
