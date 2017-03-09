@@ -18,7 +18,7 @@
 			getMyLocation();
 
 			map = new google.maps.Map(document.getElementById('map'), {
-				zoom: 15,
+				zoom: 16,
 				center: {lat: myLat, lng: myLng}
 			});
 		}
@@ -42,6 +42,10 @@
 			});
 			marker.setMap(map);
 			map.panTo(myLocation);
+			google.maps.event.addListener(marker, 'click', function() {
+				infoWindow.setContent(marker.title);
+				infoWindow.open(map, marker);
+			});
 			loadNotUber();
 		}
 
@@ -59,21 +63,56 @@
 
 		function parseResponse() {
 			data = JSON. parse(request.responseText);
-			console.log(data.vehicles[1]);
 			if (data.vehicles != null) {
-				console.log("you are a passenger");
+				for (i = 0; i < data.vehicles.length; i++) {
+				var marker = new google.maps.Marker ({
+					position: {lat: data.vehicles[i].lat, lng: data.vehicles[i].lng},
+					title: data.vehicles[i].username + " is " + distanceAway(data.vehicles[i].lat, data.vehicles[i].lng) + " miles away"
+					});
+					marker.setMap(map);
+
+				}
 			}
-			if (data.passenger != null) {
-				console.log("you are not a driver");
+			if (data.passengers != null) {
+				var marker;
+				for (i = 0; i < data.passengers.length; i++) {
+				marker = new google.maps.Marker ({
+					position: {lat: data.passengers[i].lat, lng: data.passengers[i].lng},
+					title: data.passengers[i].username + " is " + distanceAway(data.passengers[i].lat, data.passengers[i].lng) + " miles away"
+				});
+				marker.setMap(map);
+				google.maps.event.addListener(marker, 'click', function() {
+					infoWindow.setContent(this.title);
+					infoWindow.open(map, this);
+				});
+				}
 			}
+			
 		}
 
+		function distanceAway(theirLat, theirLng) {
+			var radius = 3959;
+			var x1 = theirLat - myLat;
+			var dLat = x1.toRad();
+			var x2 = theirLng - myLng;
+			var dLng = x2.toRad();
+			var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(myLat.toRad()) * Math.cos(theirLat.toRad()) * 
+            	Math.sin(dLng/2) * Math.sin(dLng/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            var d = radius * c;
+            d = Math.round(d*100) / 100;
+            return d;
+		}
+
+		Number.prototype.toRad = function() {
+			return this * Math. PI / 180;
+		}
 
 	</script>
 </head>
 
 <body onload="initialize()">
 	<div id="map"></div>
-	<img id="mymarker" src="mymarker.png" />
+<!--	<img id="mymarker" src="mymarker.png" /> -->
 </body>
 </html>
