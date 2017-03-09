@@ -10,7 +10,9 @@
 		var myLocation = new google.maps.LatLng(myLat, myLng);
 		var map;
 		var request = new XMLHttpRequest();
-		var myMarker = document.getElementById("mymarker");
+		var myMarker = new google.maps.MarkerImage("mymarker.png");
+		var carMarker = new google.maps.MarkerImage("vehicle.png");
+		var pasMarker = new google.maps.MarkerImage("passenger.png");
 
 		var infoWindow = new google.maps.InfoWindow();
 
@@ -67,24 +69,29 @@
 				for (i = 0; i < data.vehicles.length; i++) {
 				var marker = new google.maps.Marker ({
 					position: {lat: data.vehicles[i].lat, lng: data.vehicles[i].lng},
-					title: data.vehicles[i].username + " is " + distanceAway(data.vehicles[i].lat, data.vehicles[i].lng) + " miles away"
+					title: data.vehicles[i].username + " is " + distanceAway(data.vehicles[i].lat, data.vehicles[i].lng) + " miles away",
+						icon: carMarker
 					});
 					marker.setMap(map);
-
+					google.maps.event.addListener(marker, 'click', function() {
+					infoWindow.setContent(this.title);
+					infoWindow.open(map, this);
+					});
 				}
 			}
 			if (data.passengers != null) {
 				var marker;
 				for (i = 0; i < data.passengers.length; i++) {
-				marker = new google.maps.Marker ({
+					marker = new google.maps.Marker ({
 					position: {lat: data.passengers[i].lat, lng: data.passengers[i].lng},
-					title: data.passengers[i].username + " is " + distanceAway(data.passengers[i].lat, data.passengers[i].lng) + " miles away"
-				});
-				marker.setMap(map);
-				google.maps.event.addListener(marker, 'click', function() {
-					infoWindow.setContent(this.title);
-					infoWindow.open(map, this);
-				});
+					title: data.passengers[i].username + " is " + distanceAway(data.passengers[i].lat, data.passengers[i].lng) + " miles away",
+						icon: pasMarker
+					});
+					marker.setMap(map);
+					google.maps.event.addListener(marker, 'click', function() {
+						infoWindow.setContent(this.title);
+						infoWindow.open(map, this);
+					});
 				}
 			}
 			
@@ -100,7 +107,7 @@
             	Math.sin(dLng/2) * Math.sin(dLng/2);
             var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
             var d = radius * c;
-            d = Math.round(d*100) / 100;
+            d = Math.round(d*1000) / 1000;
             return d;
 		}
 
@@ -113,6 +120,5 @@
 
 <body onload="initialize()">
 	<div id="map"></div>
-<!--	<img id="mymarker" src="mymarker.png" /> -->
 </body>
 </html>
