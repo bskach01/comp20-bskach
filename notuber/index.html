@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Black Car Service</title>
+	<link rel="stylesheet" href="blackcarstyle.css" />
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+	<script>
+		var myLat = 0;
+		var myLng = 0;
+		var myLocation = new google.maps.LatLng(myLat, myLng);
+		var map;
+		var request = new XMLHttpRequest();
+
+		function initialize() {
+			getMyLocation();
+
+			map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 15,
+				center: {lat: myLat, lng: myLng}
+			});
+		}
+
+		function getMyLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					myLat = position.coords.latitude;
+					myLng = position.coords.longitude;
+				startMap();
+				});
+			}
+		}
+
+		function startMap() {
+			myLocation = new google.maps.LatLng(myLat, myLng);
+			map.panTo(myLocation);
+		}
+
+
+
+
+	</script>
+</head>
+<body onload="initialize()">
+	<div id="map"></div>
+</body>
+</html>
