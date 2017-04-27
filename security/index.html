@@ -11,14 +11,14 @@
 	<p> I am looking for security flaws within the Black Car Service. This is a website that accesses a database to pair passengers with vehicles. I have been tasked with looking for flaws within this program.</p>
 
 	<h2> Methodology </h2>
-	<p> One tool I used was curl. This allowed me to use cross site scripting by inserting code into the database. </p>
+	<p> One tool I used was curl. I tried altering the formats of the arguments in the POST request. This allowed me to use cross site scripting by inserting code into the database. I also analyzed response headers.</p>
 
 	<h2> Abstract of Findings </h2>
 	<p> One vulnerability I found was that the username in the database has no restrictions. This means that it can include code that threatens the integrity of the website. Additionally, the security settings allow anyone to access the data from any website, rather than only specified site on which the database is meant to be used.</p>
 
 	<h2> Issues Found </h2>
 	<ul>
-		<li> Cross Site Scripting: Using curl, I inserted html code as the username. This caused errors within the html page loaded by https://limitless-forest-92610.herokuapp.com/. I was able to insert an image into this page. This is a  very significant error, as it allows people to alter the code within the page, and it could also be used to insert javascript. This javascript could be used to access the user's password, and other information (if anything important were stored in the database). To prevent this problem, symbols should not be allowed in the username. This way, when the username is received via /submit, all symbols should be removed, or the username should simply not be accepted. The following picture shows the image I was able to insert into the webpage:
+		<li> Cross Site Scripting: Using curl, I inserted html code as the username for a passenger. This caused errors within the html page loaded by https://limitless-forest-92610.herokuapp.com/. I was able to insert an image into this page by creating a passenger whose username was a link. This is a  very significant error, as it allows people to alter the code within the page, and it could also be used to insert javascript instead of an image. This javascript could be used to access users' passwords and other information (if anything important were stored in the database). To prevent this problem, symbols should not be allowed in the username. This way, when the username is received via /submit, all symbols should be removed, or the username should simply not be accepted if it contains symbols. The following picture shows the image I was able to insert into the webpage:
 			<div>
 				<img src="xss.jpg" alt="cross site scripting"> 
 			</div>
